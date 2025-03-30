@@ -1,0 +1,330 @@
+Info: constrained 'sys_clk' to bel 'X0/Y8/io1'
+Warning: unmatched constraint 'led1' (on line 5)
+Warning: unmatched constraint 'led2' (on line 6)
+Warning: unmatched constraint 'led3' (on line 7)
+Warning: unmatched constraint 'led4' (on line 8)
+Warning: unmatched constraint 'led5' (on line 9)
+Warning: unmatched constraint 'tx_pin' (on line 12)
+Warning: unmatched constraint 'rx_pin' (on line 13)
+Info: constrained 'pmod1' to bel 'X13/Y3/io1'
+Info: constrained 'pmod2' to bel 'X13/Y4/io0'
+Info: constrained 'pmod3' to bel 'X13/Y4/io1'
+Info: constrained 'pmod4' to bel 'X13/Y6/io0'
+Info: constrained 'pmod7' to bel 'X13/Y6/io1'
+Info: constrained 'pmod8' to bel 'X13/Y7/io0'
+Info: constrained 'pmod9' to bel 'X13/Y7/io1'
+Info: constrained 'pmod10' to bel 'X13/Y6/io0'
+
+Info: Packing constants..
+Info: Packing IOs..
+Info: Packing LUT-FFs..
+Info:     3433 LCs used as LUT4 only
+Info:       30 LCs used as LUT4 and DFF
+Info: Packing non-LUT FFs..
+Info:       98 LCs used as DFF only
+Info: Packing carries..
+Info:      261 LCs used as CARRY only
+Info: Packing RAMs..
+Info: Placing PLLs..
+Info:   constrained PLL 'pll_u1.uut' to X6/Y0/pll_3
+Info: Packing special functions..
+Info:   PLL 'pll_u1.uut' has LOCK output, need to pass all outputs via LUT
+Info:   LUT strategy for LOCK: move all users to new LUT
+Info:   constrained 'pll_u1.uut_PLL$nextpnr_LOCK_lut_through' to X1/Y1/lc0
+Info: Promoting globals..
+Info: promoting clk (fanout 130)
+Info: promoting preamble_detector_u1.fifo_rst [reset] (fanout 33)
+Info: promoting preamble_detector_u1.in_vld_SB_LUT4_I3_O [reset] (fanout 18)
+Info: promoting pmod8$SB_IO_IN [cen] (fanout 64)
+Info: promoting preamble_detector_u1.offset_SB_DFFESR_Q_E [cen] (fanout 18)
+Info: Constraining chains...
+Info:      261 LCs used to legalise carry chains.
+Info: Checksum: 0x1c522a62
+
+Info: Annotating ports with timing budgets for target frequency 12.00 MHz
+Info:    remaining fanin includes O (net preamble_detector_u1.next_count[5])
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_4_LC.O
+Info:         user: preamble_detector_u1.count_SB_DFFSR_Q_4_DFFLC.I0
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_4_LC.I1
+Info:    remaining fanin includes O (net preamble_detector_u1.fifo_rst)
+Info:         driver = preamble_detector_u1.fifo_rst_SB_LUT4_O_LC.O
+Info:         user: preamble_detector_u1.push_SB_LUT4_O_LC.I1
+Info:         user: $gbuf_preamble_detector_u1.fifo_rst_$glb_sr.USER_SIGNAL_TO_GLOBAL_BUFFER
+Info:    remaining fanin includes O (net pmod4$SB_IO_OUT)
+Info:         driver = preamble_detector_u1.fifo_jump_SB_LUT4_O_LC.O
+Info:         user: preamble_detector_u1.sync_fifo_u1.jump_SB_LUT4_I3_LC.I3
+Info:         user: pmod4$sb_io.D_OUT_0
+Info:    remaining fanin includes O (net preamble_detector_u1.in_vld_SB_LUT4_I3_O)
+Info:         driver = preamble_detector_u1.in_vld_SB_LUT4_I3_LC.O
+Info:         user: preamble_detector_u1.in_vld_SB_LUT4_I3_O_SB_LUT4_I3_LC.I3
+Info:         user: $gbuf_preamble_detector_u1.in_vld_SB_LUT4_I3_O_$glb_sr.USER_SIGNAL_TO_GLOBAL_BUFFER
+Info:    remaining fanin includes O (net preamble_detector_u1.in_vld_SB_LUT4_I3_I1)
+Info:         driver = preamble_detector_u1.in_vld_SB_LUT4_I3_I1_SB_LUT4_O_LC.O
+Info:         user: preamble_detector_u1.in_vld_SB_LUT4_I3_LC.I1
+Info:    remaining fanin includes O (net preamble_detector_u1.next_count[9])
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_LC.O
+Info:         user: preamble_detector_u1.count_SB_DFFSR_Q_DFFLC.I0
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_LC.I1
+Info:    remaining fanin includes O (net preamble_detector_u1.next_count_SB_LUT4_O_1_I0)
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_1_I0_SB_LUT4_O_LC.O
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_1_LC.I0
+Info:    remaining fanin includes O (net preamble_detector_u1.next_count_SB_LUT4_O_2_I0)
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_2_I0_SB_LUT4_O_LC.O
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_2_LC.I0
+Info:    remaining fanin includes COUT (net preamble_detector_u1.push_SB_CARRY_I0_CO[8])
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_2_I0_SB_LUT4_O_LC.COUT
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_1_I0_SB_LUT4_O_LC.I3
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_1_I0_SB_LUT4_O_LC.CIN
+Info:    remaining fanin includes COUT (net preamble_detector_u1.push_SB_CARRY_I0_CO[7])
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_3_I0_SB_LUT4_O_LC.COUT
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_2_I0_SB_LUT4_O_LC.I3
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_2_I0_SB_LUT4_O_LC.CIN
+Info:    remaining fanin includes O (net preamble_detector_u1.next_count[4])
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_5_LC.O
+Info:         user: preamble_detector_u1.count_SB_DFFSR_Q_5_DFFLC.I0
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_5_LC.I1
+Info:    remaining fanin includes O (net preamble_detector_u1.next_count_SB_LUT4_O_5_I0)
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_5_I0_SB_LUT4_O_LC.O
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_5_LC.I0
+Info:    remaining fanin includes COUT (net preamble_detector_u1.push_SB_CARRY_I0_CO[4])
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_6_I0_SB_LUT4_O_LC.COUT
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_5_I0_SB_LUT4_O_LC.I3
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_5_I0_SB_LUT4_O_LC.CIN
+Info:    remaining fanin includes COUT (net preamble_detector_u1.push_SB_CARRY_I0_CO[3])
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_7_I0_SB_LUT4_O_LC.COUT
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_6_I0_SB_LUT4_O_LC.I3
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_6_I0_SB_LUT4_O_LC.CIN
+Info:    remaining fanin includes O (net preamble_detector_u1.next_count[0])
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_9_LC.O
+Info:         user: preamble_detector_u1.count_SB_DFFSR_Q_9_DFFLC.I0
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_9_LC.I1
+Info:    remaining fanin includes O (net preamble_detector_u1.next_state[1])
+Info:         driver = preamble_detector_u1.next_state_SB_LUT4_O_LC.O
+Info:         user: preamble_detector_u1.all_zeros_SB_LUT4_I0_LC.I1
+Info:         user: preamble_detector_u1.fifo_jump_SB_LUT4_O_LC.I3
+Info:         user: preamble_detector_u1.fifo_rst_SB_LUT4_O_LC.I2
+Info:         user: preamble_detector_u1.in_vld_SB_LUT4_I3_I1_SB_LUT4_O_LC.I1
+Info:         user: preamble_detector_u1.postamble_detected_SB_LUT4_O_LC.I2
+Info:         user: preamble_detector_u1.state_SB_DFFSR_Q_DFFLC.I0
+Info:    remaining fanin includes O (net preamble_detector_u1.next_state[0])
+Info:         driver = preamble_detector_u1.next_state_SB_LUT4_O_1_LC.O
+Info:         user: preamble_detector_u1.fifo_jump_SB_LUT4_O_LC.I1
+Info:         user: preamble_detector_u1.fifo_rst_SB_LUT4_O_LC.I1
+Info:         user: preamble_detector_u1.in_vld_SB_LUT4_I3_I1_SB_LUT4_O_LC.I2
+Info:         user: preamble_detector_u1.next_state_SB_LUT4_O_1_I3_SB_LUT4_O_LC.I3
+Info:         user: preamble_detector_u1.postamble_detected_SB_LUT4_O_LC.I1
+Info:         user: preamble_detector_u1.state_SB_DFFSR_Q_1_DFFLC.I0
+Info:    remaining fanin includes O (net preamble_detector_u1.next_state_SB_LUT4_O_1_I3)
+Info:         driver = preamble_detector_u1.next_state_SB_LUT4_O_1_I3_SB_LUT4_O_LC.O
+Info:         user: preamble_detector_u1.next_state_SB_LUT4_O_1_LC.I3
+Info:    remaining fanin includes O (net preamble_detector_u1.postamble_detected)
+Info:         driver = preamble_detector_u1.postamble_detected_SB_LUT4_O_LC.O
+Info:    remaining fanin includes O (net preamble_detector_u1.next_count_SB_LUT4_O_8_I0)
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_8_I0_SB_LUT4_O_LC.O
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_8_LC.I0
+Info:    remaining fanin includes COUT (net preamble_detector_u1.push_SB_CARRY_I0_CO[6])
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_4_I0_SB_LUT4_O_LC.COUT
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_3_I0_SB_LUT4_O_LC.I3
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_3_I0_SB_LUT4_O_LC.CIN
+Info:    remaining fanin includes O (net preamble_detector_u1.next_count[2])
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_7_LC.O
+Info:         user: preamble_detector_u1.count_SB_DFFSR_Q_7_DFFLC.I0
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_7_LC.I1
+Info:    remaining fanin includes O (net preamble_detector_u1.next_count[3])
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_6_LC.O
+Info:         user: preamble_detector_u1.count_SB_DFFSR_Q_6_DFFLC.I0
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_6_LC.I1
+Info:    remaining fanin includes O (net preamble_detector_u1.push)
+Info:         driver = preamble_detector_u1.push_SB_LUT4_O_LC.O
+Info:         user: preamble_detector_u1.push_SB_LUT4_I1_LC.I1
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_en_SB_LUT4_I3_LC.I3
+Info:         user: preamble_detector_u1.push_SB_CARRY_I0$CARRY.I1
+Info:    remaining fanin includes COUT (net preamble_detector_u1.sync_fifo_u1.wr_en_SB_LUT4_I3_O_SB_CARRY_I0_CO[7])
+Info:         driver = preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_3_LC.COUT
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_2_LC.CIN
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_2_LC.I3
+Info:    remaining fanin includes O (net preamble_detector_u1.next_count_SB_LUT4_O_3_I0)
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_3_I0_SB_LUT4_O_LC.O
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_3_LC.I0
+Info:    remaining fanin includes O (net preamble_detector_u1.next_count[6])
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_3_LC.O
+Info:         user: preamble_detector_u1.count_SB_DFFSR_Q_3_DFFLC.I0
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_3_LC.I1
+Info:    remaining fanin includes O (net preamble_detector_u1.sync_fifo_u1.wr_en_SB_LUT4_I3_O)
+Info:         driver = preamble_detector_u1.sync_fifo_u1.wr_en_SB_LUT4_I3_LC.O
+Info:         user: preamble_detector_u1.sync_fifo_u1.sdp_1clk_bram_u1.ram.0.0.0_RAM.WCLKE
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_en_SB_LUT4_I3_O_SB_LUT4_I1_LC.I1
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_en_SB_LUT4_I3_O_SB_CARRY_I0$CARRY.I1
+Info:    remaining fanin includes COUT (net preamble_detector_u1.sync_fifo_u1.wr_en_SB_LUT4_I3_O_SB_CARRY_I0_CO[10])
+Info:         driver = preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_LC.COUT
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_LC.I3
+Info:    remaining fanin includes COUT (net preamble_detector_u1.sync_fifo_u1.wr_en_SB_LUT4_I3_O_SB_CARRY_I0_CO[9])
+Info:         driver = preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_1_LC.COUT
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_LC.CIN
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_LC.I3
+Info:    remaining fanin includes COUT (net preamble_detector_u1.sync_fifo_u1.wr_en_SB_LUT4_I3_O_SB_CARRY_I0_CO[6])
+Info:         driver = preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_4_LC.COUT
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_3_LC.CIN
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_3_LC.I3
+Info:    remaining fanin includes COUT (net preamble_detector_u1.sync_fifo_u1.wr_en_SB_LUT4_I3_O_SB_CARRY_I0_CO[4])
+Info:         driver = preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_6_LC.COUT
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_5_LC.CIN
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_5_LC.I3
+Info:    remaining fanin includes COUT (net preamble_detector_u1.sync_fifo_u1.wr_en_SB_LUT4_I3_O_SB_CARRY_I0_CO[3])
+Info:         driver = preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_7_LC.COUT
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_6_LC.CIN
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_6_LC.I3
+Info:    remaining fanin includes COUT (net preamble_detector_u1.sync_fifo_u1.wr_en_SB_LUT4_I3_O_SB_CARRY_I0_CO[2])
+Info:         driver = preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_8_LC.COUT
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_7_LC.CIN
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_7_LC.I3
+Info:    remaining fanin includes COUT (net preamble_detector_u1.sync_fifo_u1.wr_en_SB_LUT4_I3_O_SB_CARRY_I0_CO[5])
+Info:         driver = preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_5_LC.COUT
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_4_LC.CIN
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_4_LC.I3
+Info:    remaining fanin includes O (net preamble_detector_u1.next_count_SB_LUT4_O_9_I0)
+Info:         driver = preamble_detector_u1.push_SB_LUT4_I1_LC.O
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_9_LC.I0
+Info:    remaining fanin includes COUT (net preamble_detector_u1.sync_fifo_u1.wr_en_SB_LUT4_I3_O_SB_CARRY_I0_CO[8])
+Info:         driver = preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_2_LC.COUT
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_1_LC.CIN
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_1_LC.I3
+Info:    remaining fanin includes GLOBAL_BUFFER_OUTPUT (net preamble_detector_u1.in_vld_SB_LUT4_I3_O_$glb_sr)
+Info:         driver = $gbuf_preamble_detector_u1.in_vld_SB_LUT4_I3_O_$glb_sr.GLOBAL_BUFFER_OUTPUT
+Info:         user: preamble_detector_u1.cur_bank_SB_LUT4_O_LC.SR
+Info:         user: preamble_detector_u1.cur_corr_SB_LUT4_O_LC.SR
+Info:         user: preamble_detector_u1.cur_corr_SB_LUT4_O_2_LC.SR
+Info:         user: preamble_detector_u1.cur_corr_SB_LUT4_O_3_LC.SR
+Info:         user: preamble_detector_u1.cur_corr_SB_LUT4_O_5_LC.SR
+Info:         user: preamble_detector_u1.cur_corr_SB_LUT4_O_6_LC.SR
+Info:         user: preamble_detector_u1.cur_corr_SB_LUT4_O_4_LC.SR
+Info:         user: preamble_detector_u1.cur_corr_SB_LUT4_O_1_LC.SR
+Info:         user: preamble_detector_u1.offset_SB_DFFESR_Q_DFFLC.SR
+Info:         user: preamble_detector_u1.offset_SB_DFFESR_Q_1_DFFLC.SR
+Info:         user: preamble_detector_u1.offset_SB_DFFESR_Q_2_DFFLC.SR
+Info:         user: preamble_detector_u1.offset_SB_DFFESR_Q_3_DFFLC.SR
+Info:         user: preamble_detector_u1.offset_SB_DFFESR_Q_4_DFFLC.SR
+Info:         user: preamble_detector_u1.offset_SB_DFFESR_Q_5_DFFLC.SR
+Info:         user: preamble_detector_u1.offset_SB_DFFESR_Q_6_DFFLC.SR
+Info:         user: preamble_detector_u1.offset_SB_DFFESR_Q_7_DFFLC.SR
+Info:         user: preamble_detector_u1.offset_SB_DFFESR_Q_8_DFFLC.SR
+Info:         user: preamble_detector_u1.offset_SB_DFFESR_Q_9_DFFLC.SR
+Info:    remaining fanin includes O (net preamble_detector_u1.next_count_SB_LUT4_O_I0)
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_I0_SB_LUT4_O_LC.O
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_LC.I0
+Info:    remaining fanin includes O (net preamble_detector_u1.next_count_SB_LUT4_O_7_I0)
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_7_I0_SB_LUT4_O_LC.O
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_7_LC.I0
+Info:    remaining fanin includes COUT (net preamble_detector_u1.push_SB_CARRY_I0_CO[9])
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_1_I0_SB_LUT4_O_LC.COUT
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_I0_SB_LUT4_O_LC.I3
+Info:    remaining fanin includes COUT (net preamble_detector_u1.push_SB_CARRY_I0_CO[5])
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_5_I0_SB_LUT4_O_LC.COUT
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_4_I0_SB_LUT4_O_LC.I3
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_4_I0_SB_LUT4_O_LC.CIN
+Info:    remaining fanin includes O (net preamble_detector_u1.next_count[1])
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_8_LC.O
+Info:         user: preamble_detector_u1.count_SB_DFFSR_Q_8_DFFLC.I0
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_8_LC.I1
+Info:    remaining fanin includes O (net preamble_detector_u1.next_count_SB_LUT4_O_6_I0)
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_6_I0_SB_LUT4_O_LC.O
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_6_LC.I0
+Info:    remaining fanin includes COUT (net preamble_detector_u1.push_SB_CARRY_I0_CO[1])
+Info:         driver = preamble_detector_u1.push_SB_CARRY_I0$CARRY.COUT
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_8_I0_SB_LUT4_O_LC.I3
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_8_I0_SB_LUT4_O_LC.CIN
+Info:    remaining fanin includes GLOBAL_BUFFER_OUTPUT (net preamble_detector_u1.fifo_rst_$glb_sr)
+Info:         driver = $gbuf_preamble_detector_u1.fifo_rst_$glb_sr.GLOBAL_BUFFER_OUTPUT
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_ptr_SB_DFFSR_Q_D_SB_LUT4_O_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_ptr_SB_DFFSR_Q_1_D_SB_LUT4_O_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_ptr_SB_DFFSR_Q_2_D_SB_LUT4_O_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_ptr_SB_DFFSR_Q_3_D_SB_LUT4_O_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_ptr_SB_DFFSR_Q_4_D_SB_LUT4_O_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_ptr_SB_DFFSR_Q_5_D_SB_LUT4_O_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_ptr_SB_DFFSR_Q_6_D_SB_LUT4_O_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_ptr_SB_DFFSR_Q_7_D_SB_LUT4_O_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_ptr_SB_DFFSR_Q_8_D_SB_LUT4_O_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_ptr_SB_DFFSR_Q_9_D_SB_LUT4_O_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_wrap_SB_DFFSR_Q_D_SB_LUT4_O_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_1_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_2_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_3_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_4_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_5_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_6_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_7_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_8_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_en_SB_LUT4_I3_O_SB_LUT4_I1_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_ptr_reg_SB_DFFSR_Q_DFFLC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_ptr_reg_SB_DFFSR_Q_1_DFFLC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_ptr_reg_SB_DFFSR_Q_2_DFFLC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_ptr_reg_SB_DFFSR_Q_3_DFFLC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_ptr_reg_SB_DFFSR_Q_4_DFFLC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_ptr_reg_SB_DFFSR_Q_5_DFFLC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_ptr_reg_SB_DFFSR_Q_6_DFFLC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_ptr_reg_SB_DFFSR_Q_7_DFFLC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_ptr_reg_SB_DFFSR_Q_8_DFFLC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_ptr_reg_SB_DFFSR_Q_9_DFFLC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_LC.SR
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_reg_SB_DFFSR_Q_DFFLC.SR
+Info:    remaining fanin includes O (net preamble_detector_u1.sync_fifo_u1.jump_SB_LUT4_I3_O)
+Info:         driver = preamble_detector_u1.sync_fifo_u1.jump_SB_LUT4_I3_LC.O
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_ptr_SB_DFFSR_Q_1_D_SB_LUT4_O_LC.I1
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_ptr_SB_DFFSR_Q_2_D_SB_LUT4_O_LC.I1
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_ptr_SB_DFFSR_Q_3_D_SB_LUT4_O_LC.I1
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_ptr_SB_DFFSR_Q_4_D_SB_LUT4_O_LC.I1
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_ptr_SB_DFFSR_Q_5_D_SB_LUT4_O_LC.I1
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_ptr_SB_DFFSR_Q_6_D_SB_LUT4_O_LC.I1
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_ptr_SB_DFFSR_Q_7_D_SB_LUT4_O_LC.I1
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_ptr_SB_DFFSR_Q_8_D_SB_LUT4_O_LC.I1
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_ptr_SB_DFFSR_Q_9_D_SB_LUT4_O_LC.I3
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_ptr_SB_DFFSR_Q_D_SB_LUT4_O_LC.I1
+Info:         user: preamble_detector_u1.sync_fifo_u1.rd_wrap_SB_DFFSR_Q_D_SB_LUT4_O_LC.I1
+Info:    remaining fanin includes COUT (net preamble_detector_u1.sync_fifo_u1.wr_en_SB_LUT4_I3_O_SB_CARRY_I0_CO[1])
+Info:         driver = preamble_detector_u1.sync_fifo_u1.wr_en_SB_LUT4_I3_O_SB_CARRY_I0$CARRY.COUT
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_8_LC.CIN
+Info:         user: preamble_detector_u1.sync_fifo_u1.wr_wrap_SB_LUT4_I2_O_SB_LUT4_O_8_LC.I3
+Info:    remaining fanin includes O (net preamble_detector_u1.offset_SB_DFFESR_Q_E)
+Info:         driver = preamble_detector_u1.in_vld_SB_LUT4_I3_O_SB_LUT4_I3_LC.O
+Info:         user: $gbuf_preamble_detector_u1.offset_SB_DFFESR_Q_E_$glb_ce.USER_SIGNAL_TO_GLOBAL_BUFFER
+Info:    remaining fanin includes O (net preamble_detector_u1.next_count[7])
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_2_LC.O
+Info:         user: preamble_detector_u1.count_SB_DFFSR_Q_2_DFFLC.I0
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_2_LC.I1
+Info:    remaining fanin includes GLOBAL_BUFFER_OUTPUT (net preamble_detector_u1.offset_SB_DFFESR_Q_E_$glb_ce)
+Info:         driver = $gbuf_preamble_detector_u1.offset_SB_DFFESR_Q_E_$glb_ce.GLOBAL_BUFFER_OUTPUT
+Info:         user: preamble_detector_u1.cur_bank_SB_LUT4_O_LC.CEN
+Info:         user: preamble_detector_u1.cur_corr_SB_LUT4_O_LC.CEN
+Info:         user: preamble_detector_u1.cur_corr_SB_LUT4_O_2_LC.CEN
+Info:         user: preamble_detector_u1.cur_corr_SB_LUT4_O_3_LC.CEN
+Info:         user: preamble_detector_u1.cur_corr_SB_LUT4_O_5_LC.CEN
+Info:         user: preamble_detector_u1.cur_corr_SB_LUT4_O_6_LC.CEN
+Info:         user: preamble_detector_u1.cur_corr_SB_LUT4_O_4_LC.CEN
+Info:         user: preamble_detector_u1.cur_corr_SB_LUT4_O_1_LC.CEN
+Info:         user: preamble_detector_u1.offset_SB_DFFESR_Q_DFFLC.CEN
+Info:         user: preamble_detector_u1.offset_SB_DFFESR_Q_1_DFFLC.CEN
+Info:         user: preamble_detector_u1.offset_SB_DFFESR_Q_2_DFFLC.CEN
+Info:         user: preamble_detector_u1.offset_SB_DFFESR_Q_3_DFFLC.CEN
+Info:         user: preamble_detector_u1.offset_SB_DFFESR_Q_4_DFFLC.CEN
+Info:         user: preamble_detector_u1.offset_SB_DFFESR_Q_5_DFFLC.CEN
+Info:         user: preamble_detector_u1.offset_SB_DFFESR_Q_6_DFFLC.CEN
+Info:         user: preamble_detector_u1.offset_SB_DFFESR_Q_7_DFFLC.CEN
+Info:         user: preamble_detector_u1.offset_SB_DFFESR_Q_8_DFFLC.CEN
+Info:         user: preamble_detector_u1.offset_SB_DFFESR_Q_9_DFFLC.CEN
+Info:    remaining fanin includes O (net preamble_detector_u1.next_count_SB_LUT4_O_4_I0)
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_4_I0_SB_LUT4_O_LC.O
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_4_LC.I0
+Info:    remaining fanin includes O (net preamble_detector_u1.next_state_SB_LUT4_O_I3)
+Info:         driver = preamble_detector_u1.all_zeros_SB_LUT4_I0_LC.O
+Info:         user: preamble_detector_u1.next_state_SB_LUT4_O_LC.I3
+Info:    remaining fanin includes O (net preamble_detector_u1.next_count[8])
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_1_LC.O
+Info:         user: preamble_detector_u1.count_SB_DFFSR_Q_1_DFFLC.I0
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_1_LC.I1
+Info:    remaining fanin includes COUT (net preamble_detector_u1.push_SB_CARRY_I0_CO[2])
+Info:         driver = preamble_detector_u1.next_count_SB_LUT4_O_8_I0_SB_LUT4_O_LC.COUT
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_7_I0_SB_LUT4_O_LC.I3
+Info:         user: preamble_detector_u1.next_count_SB_LUT4_O_7_I0_SB_LUT4_O_LC.CIN
+ERROR: timing analysis failed due to presence of combinatorial loops, incomplete specification of timing ports, etc.
+7 warnings, 1 error

@@ -1,0 +1,76 @@
+
+icetime topological timing analysis report
+==========================================
+
+Report for critical path:
+-------------------------
+
+        lc40_4_8_7 (LogicCell40) [clk] -> lcout: 0.640 ns
+     0.640 ns net_7077 (uart_tx_u1.serial_counter_SB_DFFSR_Q_D[0])
+        t157 (LocalMux) I -> O: 0.330 ns
+        inmux_4_8_9076_9108 (InMux) I -> O: 0.260 ns
+        t18 (CascadeMux) I -> O: 0.000 ns
+        lc40_4_8_2 (LogicCell40) in2 -> lcout: 0.379 ns
+     1.608 ns net_7072 (uart_tx_u1.serial_counter[0])
+        t155 (LocalMux) I -> O: 0.330 ns
+        inmux_4_7_8940_8973 (InMux) I -> O: 0.260 ns
+        t6 (CascadeMux) I -> O: 0.000 ns
+        lc40_4_7_0 (LogicCell40) in2 -> carryout: 0.231 ns
+     2.428 ns t3
+        lc40_4_7_1 (LogicCell40) carryin -> carryout: 0.126 ns
+     2.555 ns net_8976 (uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[2])
+        lc40_4_7_2 (LogicCell40) carryin -> carryout: 0.126 ns
+     2.681 ns net_8982 (uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[3])
+        lc40_4_7_3 (LogicCell40) carryin -> carryout: 0.126 ns
+     2.807 ns net_8988 (uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[4])
+        lc40_4_7_4 (LogicCell40) carryin -> carryout: 0.126 ns
+     2.933 ns net_8994 (uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[5])
+        lc40_4_7_5 (LogicCell40) carryin -> carryout: 0.126 ns
+     3.060 ns net_9000 (uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[6])
+        lc40_4_7_6 (LogicCell40) carryin -> carryout: 0.126 ns
+     3.186 ns net_9006 (uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[7])
+        lc40_4_7_7 (LogicCell40) carryin -> carryout: 0.126 ns
+     3.312 ns net_9012 (uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[8])
+        t4 (ICE_CARRY_IN_MUX) carryinitin -> carryinitout: 0.196 ns
+        lc40_4_8_0 (LogicCell40) carryin -> carryout: 0.126 ns
+     3.635 ns net_9093 ($nextpnr_ICESTORM_LC_11$I3)
+        inmux_4_8_9093_9103 (InMux) I -> O: 0.260 ns
+        lc40_4_8_1 (LogicCell40) in3 -> lcout: 0.316 ns
+     4.210 ns net_7071 (uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[9])
+        t154 (LocalMux) I -> O: 0.330 ns
+        inmux_5_8_11170_11203 (InMux) I -> O: 0.260 ns
+        lc40_5_8_0 (LogicCell40) in1 -> carryout: 0.260 ns
+     5.059 ns t16
+        lc40_5_8_1 (LogicCell40) carryin -> carryout: 0.126 ns
+     5.185 ns net_11207 (uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[10])
+        lc40_5_8_2 (LogicCell40) carryin -> carryout: 0.126 ns
+     5.311 ns net_11213 ($nextpnr_ICESTORM_LC_13$I3)
+        inmux_5_8_11213_11223 (InMux) I -> O: 0.260 ns
+        lc40_5_8_3 (LogicCell40) in3 -> lcout: 0.316 ns
+     5.886 ns net_9023 (uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[11])
+        t196 (LocalMux) I -> O: 0.330 ns
+        inmux_5_7_11057_11079 (InMux) I -> O: 0.260 ns
+     6.475 ns net_11079 (uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[11])
+        lc40_5_7_0 (LogicCell40) in0 [setup]: 0.400 ns
+     6.875 ns net_8897 (uart_tx_u1.serial_counter_SB_LUT4_O_8_I3_SB_LUT4_I1_I0)
+
+Resolvable net names on path:
+     0.640 ns ..  1.229 ns uart_tx_u1.serial_counter_SB_DFFSR_Q_D[0]
+     1.608 ns ..  2.197 ns uart_tx_u1.serial_counter[0]
+     2.555 ns ..  2.555 ns uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[2]
+     2.681 ns ..  2.681 ns uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[3]
+     2.807 ns ..  2.807 ns uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[4]
+     2.933 ns ..  2.933 ns uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[5]
+     3.060 ns ..  3.060 ns uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[6]
+     3.186 ns ..  3.186 ns uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[7]
+     3.312 ns ..  3.509 ns uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[8]
+     3.635 ns ..  3.894 ns $nextpnr_ICESTORM_LC_11$I3
+     4.210 ns ..  4.799 ns uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[9]
+     5.185 ns ..  5.185 ns uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[10]
+     5.311 ns ..  5.570 ns $nextpnr_ICESTORM_LC_13$I3
+     5.886 ns ..  6.475 ns uart_tx_u1.serial_counter_SB_DFFSR_Q_D_SB_LUT4_O_I3[11]
+                  lcout -> uart_tx_u1.serial_counter_SB_LUT4_O_8_I3_SB_LUT4_I1_I0
+
+Total number of logic levels: 16
+Total path delay: 6.88 ns (145.45 MHz)
+
