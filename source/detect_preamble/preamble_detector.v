@@ -2,7 +2,8 @@ module preamble_detector #(
     parameter       LENGTH = 4,
     parameter       BANKS  = 4,
     parameter       HI_THRESHOLD = 3,
-    parameter       LO_THRESHOLD = 2
+    parameter       LO_THRESHOLD = 2,
+    parameter       SCALING_BITS = 10
 )(
     input  wire clk,
     input  wire rst,
@@ -17,7 +18,7 @@ module preamble_detector #(
 
     localparam BANK_WIDTH = $clog2(BANKS);
     localparam CORR_WIDTH = $clog2(LENGTH+1);
-    localparam COUNT_WIDTH = 12;
+    localparam COUNT_WIDTH = 15;
 
     localparam IDLE_STATE = 2'd0; // Idling for preamble
     localparam FIND_STATE = 2'd1; // Finding max correlation
@@ -63,7 +64,8 @@ module preamble_detector #(
 
     preamble_correlator #(
         .LENGTH(LENGTH),
-        .BANKS (BANKS)
+        .BANKS (BANKS),
+        .SCALING_BITS (SCALING_BITS)
     ) preamble_correlator_u1 (
         .clk (clk),
         .rst (rst),

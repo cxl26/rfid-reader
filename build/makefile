@@ -3,8 +3,16 @@
 # TESTBENCH_FILE = ../tests/sync_fifo_tb.v
 # TOPLEVEL_FILE  = ../source/fifo/sync_fifo.v
 
-TESTBENCH_FILE = ../tests/preamble_detector_tb.v
-TOPLEVEL_FILE  = ../source/detect_preamble/preamble_detector.v
+# TESTBENCH_FILE = ../tests/top_tb.v
+# TOPLEVEL_FILE  = ../source/top.v
+
+# TESTBENCH_FILE = ../tests/preamble_detector_tb.v
+# TOPLEVEL_FILE  = ../source/detect_preamble/preamble_detector.v
+
+# TESTBENCH_FILE = ../tests/bits_detector_tb.v
+# TOPLEVEL_FILE  = ../source/detect_bits/bits_detector.v
+
+TESTBENCH_FILE = ../tests/rx_path_tb.v
 
 synth:
 	yosys \
@@ -16,13 +24,14 @@ synth:
 		-libdir ../source/fifo \
 		-libdir ../source/ram  \
 		-libdir ../source/uart\
-		-libdir ../source/detect_preamble;\
-		-libdir ../source/detect_bits;\
+		-libdir ../source/detect_preamble\
+		-libdir ../source/detect_bits\
+		-libdir ../source/crc\
 		-libdir ../source/encode;\
 		synth_ice40 -noflatten; \
 		write_blif rfid-reader.blif; \
 		write_json rfid-reader.json;"
-	nextpnr-ice40 -l ../logs/nextpnr_log.txt --hx1k --package tq144 --json rfid-reader.json --pcf constraint.pcf --asc rfid-reader.asc
+	# nextpnr-ice40 -l ../logs/nextpnr_log.txt --hx1k --package tq144 --json rfid-reader.json --pcf constraint.pcf --asc rfid-reader.asc
 	# icetime -p constraint.pcf -P tq144 -d hx1k -t rfid-reader.asc -r ../logs/icetime_log.txt
 	# icepack rfid-reader.asc bitstream.bin
 
@@ -38,6 +47,7 @@ sim:
 		-y ../source/uart \
 		-y ../source/detect_preamble \
 		-y ../source/detect_bits \
+		-y ../source/crc \
 		-y ../source/encode \
 		-y ../source      \
 		-l ../source/cells_sim.v \

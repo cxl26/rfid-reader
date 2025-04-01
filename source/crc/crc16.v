@@ -8,7 +8,7 @@ module crc16 #(
 )(
     input  wire       clk,
     input  wire       rst,   // clear crc
-    input  wire       in_data,   // bit input
+    input  wire       in_dat,   // bit input
     input  wire       in_vld,   // bit valid
     output reg [15:0] crc,   // crc value
     output wire       chk    // high if crc matches residue (only used for checking)

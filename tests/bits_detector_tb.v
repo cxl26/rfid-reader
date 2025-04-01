@@ -2,14 +2,17 @@
 
 module bits_detector_tb;
 
-    parameter LENGTH         = 10;
-    parameter BANKS          = 4;
+    parameter LENGTH         = 13;
+    parameter BANKS          = 9;
+    parameter EL_GATES       = 2;
 
     parameter NUM_RSET = 20;
-    parameter NUM_DATA = 300;
+    parameter NUM_DATA = 500;
     parameter NUM_ZERO = 5;
-
+    parameter SYM_PERIOD = 12;
     localparam BANK_WIDTH = $clog2(BANKS);
+
+    parameter ONE_IN_X_FLIPPED = 15;
 
     //outputs
     wire out_dat;
@@ -26,8 +29,6 @@ module bits_detector_tb;
     reg        queue [$]; 
     reg        rand_data;
     integer    send_count = 0;
-    integer    recv_count = 0;
-    
     wire       send_strobe;
 
     wire send_rdy;
@@ -53,7 +54,7 @@ module bits_detector_tb;
     bits_detector #(
         .LENGTH (LENGTH),
         .BANKS  (BANKS),
-        .EL_GATES (1)
+        .EL_GATES (EL_GATES)
     ) bits_detector_u1 (
         .clk (clk),
         .rst (dut_rst),
@@ -65,27 +66,30 @@ module bits_detector_tb;
     );
 
     initial queue.push_back(1'b1);
-    assign frequency_bank = 2;
+    assign frequency_bank = 4;
 
     fm0_encoder fm0_encoder_u1
     (
         .clk       (clk),    // Clock signal
         .rst       (1'b0),   // Reset signal
-        .sym_period(4'd11),
+        .sym_period(SYM_PERIOD),
         .in_bit    (send_bit),
         .in_rdy    (send_rdy),
         .out_fm0   (fm0),
         .out_rdy   (send_strobe && (send_state == SEND_DATA))
     );
-    
+
+    // TX Driver Process
     always@(posedge clk) begin
         $urandom(seed); // Set a different seed
 
+        // Send bits to encoder
         if (send_rdy) begin
             queue.push_back(send_bit);
-            //$display("Sent data: %b, Sim time: %0d", send_bit, $time());
             send_bit <= $urandom_range(1,0);
         end
+
+        // Send samples to dut
         if (send_strobe) begin
             send_state <= next_state;
             send_count <= (next_state != send_state) ? 0 : send_count + 1;
@@ -96,7 +100,7 @@ module bits_detector_tb;
                     dut_rst <= 1'b1;
                 end
                 SEND_DATA: begin
-                    in_dat  <= fm0;
+                    in_dat  <= ($urandom_range(ONE_IN_X_FLIPPED,0) == 0) ? !fm0 : fm0; // random sample bit flips
                     in_vld  <= 1'b1;
                     dut_rst <= 1'b0;
                 end
@@ -113,11 +117,9 @@ module bits_detector_tb;
         end
     end
 
+    // RX Monitor Process
     always@(posedge clk) begin
-        if (send_state == SEND_RSET) begin
-            recv_count <= 0;
-        end else if (out_vld && queue.size()>0) begin
-            recv_count <= recv_count+1;
+        if (out_vld && queue.size()>0) begin
             if (out_dat == queue.pop_front()) begin
                 $display ("Correct data: %b, Queue size: %0d, Sim time: %0d", out_dat, queue.size(), $time());
             end else begin
@@ -138,7 +140,7 @@ module bits_detector_tb;
         $dumpfile("dump.vcd");
         $dumpvars;
         clk = 0;
-        repeat(900) #5 clk = ~clk;
+        repeat(500) #5 clk = ~clk;
         $finish;
     end
 

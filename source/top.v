@@ -1,32 +1,33 @@
-module top (
+module top # (
+    parameter SAMPLING_N = 2,
+    parameter BANKS = 9,
+    parameter PREAMBLE_MAX_LENGTH = 80,
+    parameter SYMBOL_MAX_LENGTH = 13,
+    parameter HI_THRESHOLD = 75,
+    parameter LO_THRESHOLD = 70,
+    parameter SCALING_BITS = 10,
+    parameter EL_GATES = 1
+)(
     input        sys_clk, 
-    output wire  pmod1,  // rx_sof
-    output wire  pmod2,  // rx_eof
+    input wire  pmod1,  // rx_in
+    input wire  pmod2,  // rst
     output wire  pmod3,  // bit
     output wire  pmod4,  // vld
-    input wire  pmod7,  // rx_in
-    input wire  pmod8,  // rst
-    input wire  pmod9,  // tx_out
+    input wire  pmod7,
+    input wire  pmod8,  
+    input wire  pmod9,
     input wire  pmod10
 );
-    parameter SAMPLING_N = 3;
-    parameter BANKS = 16;
-    parameter PREAMBLE_MAX_LENGTH = 76;
-    parameter SYMBOLS_MAX_LENGTH = 10;
-    parameter HI_THRESHOLD = 70;
-    parameter LO_THRESHOLD;
-    parameter EL_GATES;
 
     localparam BANK_WIDTH = $clog2(BANKS);
-    localparam CORR_WIDTH = $clog2(LENGTH+1);
 
     wire clk;
     wire rst;
+    wire rx_in;
+    wire tx_out;
 
-    assign rst = pmod8;
-    assign rx_in = pmod7;
-    assign pmod1 = rx_sof;
-    assign pmod2 = rx_eof;
+    assign rx_in = pmod1;
+    assign rst = pmod2;
     assign pmod3 = bits_detector_out_dat;
     assign pmod4 = bits_detector_out_vld;
 
@@ -48,7 +49,7 @@ module top (
     wire rx_eof;
 
     wire tx_sof;
-    wire tx_eof
+    wire tx_eof;
 
     wire [15:0] crc16_val;
     wire        crc16_chk;
@@ -57,14 +58,15 @@ module top (
     wire        crc5_chk;
 
 
-    pll pll_u1 (
-        .clock_in  (sys_clk),
-        .clock_out (clk),
-        .locked    ()
-    );
+    // pll pll_u1 (
+    //     .clock_in  (sys_clk),
+    //     .clock_out (clk),
+    //     .locked    ()
+    // );
+    assign clk = sys_clk;
 
     sampler #(
-        N(SAMPLING_N)
+        .N(SAMPLING_N)
     ) sampler_u1 (
         .clk    (clk),      // Destination clock domain
         .rst    (rst),      // Synchronous reset
@@ -77,7 +79,8 @@ module top (
         .LENGTH(PREAMBLE_MAX_LENGTH),
         .BANKS(BANKS),
         .HI_THRESHOLD(HI_THRESHOLD),
-        .LO_THRESHOLD(LO_THRESHOLD)
+        .LO_THRESHOLD(LO_THRESHOLD),
+        .SCALING_BITS(SCALING_BITS)
     ) preamble_detector_u1 (
         .clk                (clk),
         .rst                (rst),
@@ -91,7 +94,7 @@ module top (
     );
 
     bits_detector #(
-        .LENGTH(SYMBOLS_MAX_LENGTH),
+        .LENGTH(SYMBOL_MAX_LENGTH),
         .BANKS(BANKS),
         .EL_GATES(EL_GATES)
     ) bits_detector_u1 (
@@ -109,7 +112,7 @@ module top (
         .rst    (rx_sof),
         .in_dat (bits_detector_out_dat),
         .in_vld (bits_detector_out_vld),
-        .crc,   (crc16_val),
+        .crc    (crc16_val),
         .chk    (crc16_chk)
     );
 
@@ -118,7 +121,7 @@ module top (
         .rst    (tx_sof),
         .in_dat (ctrl_fsm_out_dat),
         .in_vld (ctrl_fsm_out_vld),
-        .crc,   (crc5_val),
+        .crc    (crc5_val),
         .chk    (crc5_chk)
     );
 

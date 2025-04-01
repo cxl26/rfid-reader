@@ -6,12 +6,12 @@ module crc5 #(
     parameter PRESET = 5'b01001,
     parameter RESIDUE = 5'b00000
 )(
-   input  wire      clk
-   input  wire      rst;   // clear crc 
-   input  wire      in_dat;   // bit input
-   input  wire      in_vld;   // bit valid
-   output reg [4:0] crc;   // crc value
-   output wire      chk;   // high if crc matches residue (only used for checking)
+   input  wire      clk,
+   input  wire      rst,   // clear crc 
+   input  wire      in_dat,   // bit input
+   input  wire      in_vld,   // bit valid
+   output reg [4:0] crc,   // crc value
+   output wire      chk   // high if crc matches residue (only used for checking)
 );
 
    wire   inv;

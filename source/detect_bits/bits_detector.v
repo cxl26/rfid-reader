@@ -26,6 +26,8 @@ module bits_detector #(
     reg update_bit_symbol = 0;
     reg update_bit_period = 0;
 
+    reg [BANK_WIDTH-1:0] frequency_bank_reg = 0;
+
     reg [1:0]                   bit_symbol = 0;
     reg [CORR_WIDTH+EL_GATES:0] bit_period = 0;
 
@@ -69,7 +71,7 @@ module bits_detector #(
         .rst(rst),
         .in_dat(in_dat),
         .in_vld(in_vld),
-        .frequency_bank(frequency_bank),
+        .frequency_bank(frequency_bank_reg),
         .corr_dat(corr_dat),
         .corr_vld(corr_vld)
     );
@@ -133,6 +135,7 @@ module bits_detector #(
             // Reset bit period registers
             bit_period <= correlator_lengths[frequency_bank];
             update_bit_period <= 0;
+            frequency_bank_reg <= frequency_bank;
 
             // Reset correlation registers
             ontime_corr <= {4*CORR_WIDTH{1'b1}};

@@ -2,13 +2,16 @@
 
 module preamble_detector_tb;
 
-    parameter LENGTH         = 10;
-    parameter BANKS          = 4;
-    parameter HI_THRESHOLD   = 10;
-    parameter LO_THRESHOLD   = 6;
+    parameter LENGTH         = 80;
+    parameter BANKS          = 9;
+    parameter HI_THRESHOLD   = 75;
+    parameter LO_THRESHOLD   = 70;
+    parameter SCALING_BITS   = 10;
 
-    parameter NUM_JUNK = 20;
-    parameter NUM_DATA = 20;
+    parameter NUM_JUNK = 200;
+    parameter NUM_DATA = 5;
+    parameter NUM_ZEROS = LENGTH/2+1;
+    parameter PREAMBLE = 80'b1111111111000011110000000011111000000000000011111111;
 
     localparam BANK_WIDTH = $clog2(BANKS);
 
@@ -27,7 +30,7 @@ module preamble_detector_tb;
     // generated signals
     reg        queue [$]; 
     reg        rand_data;
-    reg [LENGTH-1:0] preamble = 10'b0001100011;//38'b11111111000111000000111000000000111111;
+    reg [LENGTH-1:0] preamble = PREAMBLE;
     integer    send_count = 0;
     integer    recv_count = 0;
     reg [1:0]  send_state = 0;
@@ -39,7 +42,8 @@ module preamble_detector_tb;
         .LENGTH       (LENGTH),
         .BANKS        (BANKS),
         .HI_THRESHOLD (HI_THRESHOLD),
-        .LO_THRESHOLD (LO_THRESHOLD)
+        .LO_THRESHOLD (LO_THRESHOLD),
+        .SCALING_BITS (SCALING_BITS)
     ) preamble_detector_u1 (
         .clk    (clk),
         .rst    (1'b0),
@@ -53,8 +57,8 @@ module preamble_detector_tb;
     );
 
     always@(posedge clk) begin
-        //if ($urandom_range(1, 0)) begin
-        if (1'b0) begin
+        if ($urandom_range(1, 0)) begin
+        //if (1'b0) begin
             in_dat <= $random();
             in_vld <= 1'b0;
         end else begin
@@ -62,13 +66,12 @@ module preamble_detector_tb;
             in_vld <= 1'b1;
             send_state <= next_state;
             send_count <= (next_state != send_state) ? 0 : send_count + 1;
-            case(next_state)
+            case(send_state)
                 SEND_JUNK: begin
                     in_dat <= rand_data;
                 end
                 SEND_PREA: begin
-                    in_dat <= preamble[LENGTH-1];
-                    preamble <= {preamble[LENGTH-2:0], preamble[LENGTH-1]};
+                    in_dat <= preamble[LENGTH-1-send_count];
                 end
                 SEND_DATA: begin
                     in_dat <= rand_data;
@@ -99,7 +102,7 @@ module preamble_detector_tb;
             SEND_JUNK: next_state = (send_count == NUM_JUNK-1) ? SEND_PREA : SEND_JUNK;
             SEND_PREA: next_state = (send_count == LENGTH-1) ? SEND_DATA : SEND_PREA;
             SEND_DATA: next_state = (send_count == NUM_DATA-1) ? SEND_ZERO : SEND_DATA;
-            SEND_ZERO: next_state = (send_count == 20-1) ? SEND_JUNK : SEND_ZERO;
+            SEND_ZERO: next_state = (send_count == NUM_ZEROS-1) ? SEND_JUNK : SEND_ZERO;
         endcase
     end
 
@@ -107,7 +110,7 @@ module preamble_detector_tb;
         $dumpfile("dump.vcd");
         $dumpvars;
         clk = 0;
-        repeat(900) #5 clk = ~clk;
+        repeat(9000) #5 clk = ~clk;
         $finish;
     end
 

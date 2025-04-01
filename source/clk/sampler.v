@@ -1,5 +1,5 @@
 module sampler #(
-    parameter N = 10;
+    parameter N = 10
 ) (
     input  wire clk,      // Destination clock domain
     input  wire rst,      // Synchronous reset
@@ -27,7 +27,7 @@ module sampler #(
             ff1 <= 1'b0;
             ff2 <= 1'b0;
         end else begin
-            ff1 <= in_dat;
+            ff1 <= rx_in;
             ff2 <= ff1;
         end
     end
