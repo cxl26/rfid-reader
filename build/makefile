@@ -3,8 +3,8 @@
 # TESTBENCH_FILE = ../tests/sync_fifo_tb.v
 # TOPLEVEL_FILE  = ../source/fifo/sync_fifo.v
 
-# TESTBENCH_FILE = ../tests/top_tb.v
-# TOPLEVEL_FILE  = ../source/top.v
+TESTBENCH_FILE = ../tests/top_tb.v
+TOPLEVEL_FILE  = ../source/top.v
 
 # TESTBENCH_FILE = ../tests/preamble_detector_tb.v
 # TOPLEVEL_FILE  = ../source/detect_preamble/preamble_detector.v
@@ -12,7 +12,9 @@
 # TESTBENCH_FILE = ../tests/bits_detector_tb.v
 # TOPLEVEL_FILE  = ../source/detect_bits/bits_detector.v
 
-TESTBENCH_FILE = ../tests/rx_path_tb.v
+# TESTBENCH_FILE = ../tests/rx_path_tb.v
+
+# TESTBENCH_FILE = ../tests/encoder_tb.v
 
 synth:
 	yosys \
@@ -27,7 +29,8 @@ synth:
 		-libdir ../source/detect_preamble\
 		-libdir ../source/detect_bits\
 		-libdir ../source/crc\
-		-libdir ../source/encode;\
+		-libdir ../source/encode\
+		-libdir ../source;\
 		synth_ice40 -noflatten; \
 		write_blif rfid-reader.blif; \
 		write_json rfid-reader.json;"

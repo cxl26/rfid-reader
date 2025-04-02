@@ -5,15 +5,15 @@ module top # (
     parameter SYMBOL_MAX_LENGTH = 13,
     parameter HI_THRESHOLD = 75,
     parameter LO_THRESHOLD = 70,
-    parameter SCALING_BITS = 10,
+    parameter SCALING_BITS = 5,
     parameter EL_GATES = 1
 )(
     input        sys_clk, 
-    input wire  pmod1,  // rx_in
-    input wire  pmod2,  // rst
+    input wire  pmod1,   // rx_in
+    input wire  pmod2,   // rst
     output wire  pmod3,  // bit
     output wire  pmod4,  // vld
-    input wire  pmod7,
+    input wire  pmod7,   // tx_out
     input wire  pmod8,  
     input wire  pmod9,
     input wire  pmod10
@@ -30,6 +30,7 @@ module top # (
     assign rst = pmod2;
     assign pmod3 = bits_detector_out_dat;
     assign pmod4 = bits_detector_out_vld;
+    assign pmod7 = tx_out;
 
     // RX Path Data
     wire sampler_out_dat;
@@ -43,9 +44,12 @@ module top # (
     wire ctrl_fsm_out_dat;
     wire ctrl_fsm_out_vld;
 
+    wire sending;
+    wire receiving;
+
     wire [BANK_WIDTH-1:0] frequency_bank;
 
-    wire rx_sof;
+    wire preamble_detected;
     wire rx_eof;
 
     wire tx_sof;
@@ -57,13 +61,14 @@ module top # (
     wire [4:0] crc5_val;
     wire        crc5_chk;
 
+    wire output_pie_preamble;
 
-    // pll pll_u1 (
-    //     .clock_in  (sys_clk),
-    //     .clock_out (clk),
-    //     .locked    ()
-    // );
-    assign clk = sys_clk;
+    pll pll_u1 (
+        .clock_in  (sys_clk),
+        .clock_out (clk),
+        .locked    ()
+    );
+    // assign clk = sys_clk;
 
     sampler #(
         .N(SAMPLING_N)
@@ -89,8 +94,7 @@ module top # (
         .out_dat            (preamble_detector_out_dat),
         .out_vld            (preamble_detector_out_vld),
         .frequency_bank     (frequency_bank),
-        .preamble_detected  (rx_sof),
-        .postamble_detected (rx_eof)
+        .preamble_detected  (preamble_detected)
     );
 
     bits_detector #(
@@ -99,7 +103,7 @@ module top # (
         .EL_GATES(EL_GATES)
     ) bits_detector_u1 (
         .clk            (clk),
-        .rst            (rx_sof),
+        .rst            (preamble_detected),
         .in_dat         (preamble_detector_out_dat), 
         .in_vld         (preamble_detector_out_vld),
         .frequency_bank (frequency_bank),
@@ -109,20 +113,51 @@ module top # (
 
     crc16 crc16_u1 (
         .clk    (clk),
-        .rst    (rx_sof),
+        .rst    (preamble_detected),
         .in_dat (bits_detector_out_dat),
         .in_vld (bits_detector_out_vld),
         .crc    (crc16_val),
         .chk    (crc16_chk)
     );
 
+    ctrl_fsm ctrl_fsm_u1 (
+        .clk        (clk),
+        .rst        (rst),
+        .in_dat     (bits_detector_out_dat), 
+        .in_vld     (bits_detector_out_vld),
+        .crc16_chk  (crc16_chk),
+        .crc5_val   (crc5_val),
+        .out_dat    (ctrl_fsm_out_dat),
+        .out_rdy    (ctrl_fsm_out_rdy),
+        .sending    (sending),
+        .receiving  (receiving),
+        .output_pie_preamble(output_pie_preamble)
+    );
+
     crc5 crc5_u1 (
         .clk    (clk),
-        .rst    (tx_sof),
+        .rst    (!sending),
         .in_dat (ctrl_fsm_out_dat),
-        .in_vld (ctrl_fsm_out_vld),
+        .in_vld (ctrl_fsm_out_rdy),
         .crc    (crc5_val),
         .chk    (crc5_chk)
+    );
+
+    pie_encoder
+    #(
+        .PW         (2),
+        .ONE_PERIOD (10), // PW is 1/3 TARI works
+        .ZERO_PERIOD(6),
+        .RTCAL      (16),
+        .TRCAL      (32),
+        .DELIMITER  (3)
+    ) pie_encoder_u1 (
+        .clk(clk),
+        .rst(!sending),
+        .in_bit(ctrl_fsm_out_dat),     // Binary input data
+        .in_rdy(ctrl_fsm_out_rdy),
+        .out_pie(tx_out),     // FM0 encoded output
+        .output_pie_preamble(output_pie_preamble)
     );
 
 endmodule

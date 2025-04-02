@@ -24,15 +24,27 @@ module fm0_encoder_tb;
     //     .out_rdy(1'b1)
     // );
 
-    pie_encoder #(
-        .THIRD_TARI(1)
-    ) fm0_encoder_u1 (
+    pie_encoder pie_encoder_u1 (
         .clk(clk),         // Clock signal
         .rst(1'b0),        // Reset signal
         .in_bit(in_bit),           // Binary input data
         .in_rdy(in_rdy),
         .out_pie(out_dat),          // FM0 encoded output
-        .out_rdy(1'b1)
+        .output_pie_preamble(1'b0)
+    );
+
+    pie_decoder #(
+        .ONE_PERIOD(10),
+        .ZERO_PERIOD(6),
+        .RTCAL(16),
+        .TRCAL(32),
+        .DELIMITER(3)
+    ) u_pie_decoder (
+        .clk(clk),
+        .rst(1'b0),
+        .in_pie(out_dat),
+        .out_bit(decoded_bit),
+        .out_valid(decoded_valid)
     );
 
     always@(posedge clk) begin

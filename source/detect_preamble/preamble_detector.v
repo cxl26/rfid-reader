@@ -3,7 +3,7 @@ module preamble_detector #(
     parameter       BANKS  = 4,
     parameter       HI_THRESHOLD = 3,
     parameter       LO_THRESHOLD = 2,
-    parameter       SCALING_BITS = 10
+    parameter       SCALING_BITS = 5
 )(
     input  wire clk,
     input  wire rst,

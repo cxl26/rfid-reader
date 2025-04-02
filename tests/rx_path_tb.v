@@ -3,7 +3,7 @@ module rx_path_tb;
 
     // Common Dut Parameters
     parameter BANKS          = 9;
-    parameter SAMPLING_N     = 2;
+    parameter SAMPLING_N     = 1;
 
     // Preamble Dut Parameters
     parameter PREAMBLE_MAX_LENGTH = 80;
@@ -16,12 +16,12 @@ module rx_path_tb;
     parameter EL_GATES       = 2;
 
     // Test Parameters
-    parameter ONE_IN_X_FLIPPED = 25;
+    parameter ONE_IN_X_FLIPPED = 0;
     parameter PREAMBLE = 80'b1111111111110000011111000000000011111100000000000000001111111111;
     parameter SYM_PERIOD = 4'd11;
     parameter NUM_JUNK = 200;
     parameter NUM_PREA = 80;
-    parameter NUM_DATA = 500;
+    parameter NUM_DATA = 2800;
     parameter NUM_ZERO = NUM_PREA/2+1;
     parameter SEED = 10;
 
@@ -68,7 +68,7 @@ module rx_path_tb;
         .pmod4      (out_vld)  // vld
     );
 
-    // Instantiate strobe gen for timing sample
+    // Instantiate strobe gen for timing samples
     strb_gen #(
         .N(SAMPLING_N)
     ) strb_gen_u1 (
@@ -112,7 +112,7 @@ module rx_path_tb;
             case(send_state)
                 SEND_JUNK:  in_dat <= $urandom_range(1,0);
                 SEND_PREA:  in_dat <= preamble[NUM_PREA-1-send_count];
-                SEND_DATA:  in_dat  <= ($urandom_range(ONE_IN_X_FLIPPED,0) == 0) ? !fm0 : fm0; // random sample bit flips
+                SEND_DATA:  in_dat <= ($urandom_range(ONE_IN_X_FLIPPED,0) == 0) ? !fm0 : fm0; // random sample bit flips
                 SEND_ZERO:  in_dat <= 1'b0;
             endcase
         end

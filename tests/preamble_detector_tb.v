@@ -6,7 +6,7 @@ module preamble_detector_tb;
     parameter BANKS          = 9;
     parameter HI_THRESHOLD   = 75;
     parameter LO_THRESHOLD   = 70;
-    parameter SCALING_BITS   = 10;
+    parameter SCALING_BITS   = 5;
 
     parameter NUM_JUNK = 200;
     parameter NUM_DATA = 5;
@@ -110,7 +110,7 @@ module preamble_detector_tb;
         $dumpfile("dump.vcd");
         $dumpvars;
         clk = 0;
-        repeat(9000) #5 clk = ~clk;
+        repeat(90000) #5 clk = ~clk;
         $finish;
     end
 

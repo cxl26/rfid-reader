@@ -11,7 +11,7 @@ bits_lengths_output_file = "../source/detect_bits/correlator_lengths.txt"
 SAMP_PER_SYMB    = 10
 FREQ_DEV         = 0.22
 SPACING          = 4
-SCALING_BITS     = 10
+SCALING_BITS     = 5
 
 def compute_prea_coeff(n):
     print(n)
