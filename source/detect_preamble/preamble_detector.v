@@ -58,7 +58,6 @@ module preamble_detector #(
     wire fifo_jump_error;
 
     assign preamble_detected = (state == FIND_STATE) && (next_state == DATA_STATE);
-    assign postamble_detected = (state == DATA_STATE) && (next_state == IDLE_STATE);
     assign frequency_bank = max_bank;
 
     preamble_correlator #(

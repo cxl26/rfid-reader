@@ -9,14 +9,15 @@ module top # (
     parameter EL_GATES = 1
 )(
     input       sys_clk, 
+    input       sys_rst,
     input wire  pmod1,   // rx_in
-    input wire  pmod2,   // rst
+    output wire  pmod2,  // tx_out
     output wire  pmod3,  // bit
     output wire  pmod4,  // vld
-    output wire  pmod7,  // tx_out
-    input wire  pmod8,  
-    input wire  pmod9,
-    input wire  pmod10
+    output wire  pmod7,
+    output wire  pmod8,  
+    output wire  pmod9,
+    output wire  pmod10
 );
 
     localparam BANK_WIDTH = $clog2(BANKS);
@@ -27,10 +28,10 @@ module top # (
     wire tx_out;
 
     assign rx_in = pmod1;
-    assign rst = pmod2;
+    assign pmod2 = tx_out;
+    assign rst = sys_rst;
     assign pmod3 = bits_detector_out_dat;
     assign pmod4 = bits_detector_out_vld;
-    assign pmod7 = tx_out;
 
     // RX Path Data
     wire sampler_out_dat;
@@ -42,7 +43,7 @@ module top # (
 
     // TX Path Data
     wire ctrl_fsm_out_dat;
-    wire ctrl_fsm_out_vld;
+    wire ctrl_fsm_out_rdy;
 
     wire sending;
     wire receiving;
@@ -66,15 +67,15 @@ module top # (
     //     .locked    ()
     // );
 
-    // // For Xilinx Synthesis
-    // xilinx_mmcm xilinx_mmcm_u1 (
-    //     .clk_in1  (sys_clk),
-    //     .clk_out1 (clk),
-    //     .reset    (rst)
-    // );
+     // For Xilinx Synthesis
+     xilinx_mmcm xilinx_mmcm_u1 (
+         .clk_in1  (sys_clk),
+         .clk_out1 (clk),
+         .reset    (rst)
+     );
     
     // For simulation
-    assign clk = sys_clk;
+//    assign clk = sys_clk;
 
     sampler #(
         .N(SAMPLING_N)

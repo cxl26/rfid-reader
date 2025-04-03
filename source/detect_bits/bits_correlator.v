@@ -23,9 +23,14 @@ module bits_correlator #(
 
     integer j;
 
+//    initial begin
+//        $readmemb("../source/detect_bits/bits_correlator_coeffs.mem", correlator_coeffs);
+//        $readmemb("../source/detect_bits/bits_correlator_lengths.mem", correlator_lengths);
+//    end
+
     initial begin
-        $readmemb("../source/detect_bits/bits_correlator_coeffs.mem", correlator_coeffs);
-        $readmemb("../source/detect_bits/bits_correlator_lengths.mem", correlator_lengths);
+        $readmemb("bits_correlator_coeffs.mem", correlator_coeffs);
+        $readmemb("bits_correlator_lengths.mem", correlator_lengths);
     end
 
     always @(posedge clk) begin

@@ -49,6 +49,10 @@ module top_tb;
     reg in_dat = 0;
     reg clk;
     reg rst;
+    
+    wire send_strobe;
+    wire send_rdy;
+    wire fm0;
 
     // Instantiate DUT
     top # (
@@ -61,9 +65,10 @@ module top_tb;
         .SCALING_BITS       (SCALING_BITS),
         .EL_GATES           (EL_GATES)
     ) top_u1 (
-        .sys_clk    (clk), 
+        .sys_clk    (clk),
+        .sys_rst    (1'b0), 
         .pmod1      (in_dat),  // rx_in
-        .pmod2      (1'b0),  // rst
+        .pmod2      (),    // tx_out
         .pmod3      (out_dat),  // bit
         .pmod4      (out_vld)  // vld
     );
@@ -96,7 +101,7 @@ module top_tb;
     // TX Driver Process
     always@(posedge clk) begin
         // Set a random seed
-        $urandom(seed);
+        // $urandom(seed);
 
         // Send bits to encoder
         if (send_rdy) begin

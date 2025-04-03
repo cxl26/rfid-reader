@@ -51,7 +51,7 @@ module preamble_detector_tb;
         .out_dat(out_dat),
         .out_vld(out_vld),
         .frequency_bank     (frequency_bank),
-        .preamble_detected  (preamble_detected),
+        .preamble_detected  (preamble_detected)
     );
 
     always@(posedge clk) begin

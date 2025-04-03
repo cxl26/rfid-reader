@@ -16,8 +16,12 @@ module bits_detector #(
     localparam CORR_WIDTH = $clog2(LENGTH+1);
 
     reg [CORR_WIDTH-1:0]   correlator_lengths [BANKS-1:0];
+//    initial begin
+//        $readmemb("../source/detect_bits/bits_correlator_lengths.mem", correlator_lengths);
+//    end
+
     initial begin
-        $readmemb("../source/detect_bits/bits_correlator_lengths.mem", correlator_lengths);
+        $readmemb("bits_correlator_lengths.mem", correlator_lengths);
     end
 
     reg  [CORR_WIDTH+EL_GATES:0]  count = 0;
@@ -146,7 +150,7 @@ module bits_detector #(
 
             // Update count and valid
             if (corr_vld) begin
-                count <= (count == bit_period-1) ? 0 : count + 1;;
+                count <= (count == bit_period-1) ? 0 : count + 1;
             end
             valid <= update_bit_symbol;
 
