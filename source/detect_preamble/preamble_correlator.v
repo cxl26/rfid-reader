@@ -25,9 +25,9 @@ module preamble_correlator #(
     reg [(CORR_WIDTH+2*SCALING_BITS)*BANKS-1:0] product;
 
     initial begin
-        $readmemb("../source/detect_preamble/correlator_coeffs.txt", correlator_coeffs);
-        $readmemb("../source/detect_preamble/correlator_lengths.txt", correlator_lengths);
-        $readmemb("../source/detect_preamble/correlator_scaling.txt", correlator_scaling);
+        $readmemb("../source/detect_preamble/preamble_correlator_coeffs.mem", correlator_coeffs);
+        $readmemb("../source/detect_preamble/preamble_correlator_lengths.mem", correlator_lengths);
+        $readmemb("../source/detect_preamble/preamble_correlator_scaling.mem", correlator_scaling);
     end
 
     always @(posedge clk) begin
@@ -43,7 +43,6 @@ module preamble_correlator #(
     end
 
     always@(*) begin
-
         for (i=0; i<BANKS; i=i+1) begin
             corr[i*CORR_WIDTH+:CORR_WIDTH] = 0;
             for (j=0; j<LENGTH; j=j+1)

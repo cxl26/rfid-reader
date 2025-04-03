@@ -1,5 +1,5 @@
 
-module rx_path_tb;
+module top_tb;
 
     // Common Dut Parameters
     parameter BANKS          = 9;

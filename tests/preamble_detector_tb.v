@@ -16,11 +16,10 @@ module preamble_detector_tb;
     localparam BANK_WIDTH = $clog2(BANKS);
 
     //outputs
-    reg out_dat;
-    reg out_vld;
-    reg [BANK_WIDTH-1:0] frequency_bank;
-    reg preamble_detected;
-    reg postamble_detected;
+    wire out_dat;
+    wire out_vld;
+    wire [BANK_WIDTH-1:0] frequency_bank;
+    wire preamble_detected;
 
     //inputs
     reg  in_dat = 0;
@@ -53,7 +52,6 @@ module preamble_detector_tb;
         .out_vld(out_vld),
         .frequency_bank     (frequency_bank),
         .preamble_detected  (preamble_detected),
-        .postamble_detected (postamble_detected)
     );
 
     always@(posedge clk) begin

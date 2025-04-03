@@ -1,0 +1,25 @@
+# 12 MHz Clock
+set_io --warn-no-port sys_clk 21
+
+# LED Pins
+set_io --warn-no-port led1 99
+set_io --warn-no-port led2 98
+set_io --warn-no-port led3 97
+set_io --warn-no-port led4 96
+set_io --warn-no-port led5 95
+
+# UART Pins
+set_io --warn-no-port tx_pin 8
+set_io --warn-no-port rx_pin 9
+
+# PMOD Row 1
+set_io --warn-no-port pmod1 78    # line out mclk, pmod1
+set_io --warn-no-port pmod2 79    # line out ws,   pmod2
+set_io --warn-no-port pmod3 80    # line out sck,  pmod3
+set_io --warn-no-port pmod4 81    # line out sd,   pmod4
+
+# PMOD Row 2
+set_io --warn-no-port pmod7 87      # line in mclk
+set_io --warn-no-port pmod8 88      # line in ws
+set_io --warn-no-port pmod9 90      # line in sck
+set_io --warn-no-port pmod10 81     # line in sd

@@ -12,8 +12,7 @@ module preamble_detector #(
     output wire out_dat,
     output reg  out_vld, // reg
     output wire [BANK_WIDTH-1:0] frequency_bank,
-    output wire preamble_detected,
-    output wire postamble_detected
+    output wire preamble_detected
 );
 
     localparam BANK_WIDTH = $clog2(BANKS);
@@ -145,6 +144,10 @@ module preamble_detector #(
             DATA_STATE: begin
                 next_state = (all_zeros)    ? IDLE_STATE : DATA_STATE;
                 next_count = 0; 
+            end
+            default: begin
+                next_state = IDLE_STATE;
+                next_count = 0;
             end
         endcase
     end

@@ -1,12 +1,12 @@
 import csv
 import math
 
-prea_coeffs_output_file  = "../source/detect_preamble/correlator_coeffs.txt"
-prea_lengths_output_file = "../source/detect_preamble/correlator_lengths.txt"
-prea_scaling_output_file = "../source/detect_preamble/correlator_scaling.txt"
+prea_coeffs_output_file  = "../source/detect_preamble/preamble_correlator_coeffs.mem"
+prea_lengths_output_file = "../source/detect_preamble/preamble_correlator_lengths.mem"
+prea_scaling_output_file = "../source/detect_preamble/preamble_correlator_scaling.mem"
 
-bits_coeffs_output_file  = "../source/detect_bits/correlator_coeffs.txt"
-bits_lengths_output_file = "../source/detect_bits/correlator_lengths.txt"
+bits_coeffs_output_file  = "../source/detect_bits/bits_correlator_coeffs.mem"
+bits_lengths_output_file = "../source/detect_bits/bits_correlator_lengths.mem"
 
 SAMP_PER_SYMB    = 10
 FREQ_DEV         = 0.22

@@ -17,7 +17,7 @@ module bits_detector #(
 
     reg [CORR_WIDTH-1:0]   correlator_lengths [BANKS-1:0];
     initial begin
-        $readmemb("../source/detect_bits/correlator_lengths.txt", correlator_lengths);
+        $readmemb("../source/detect_bits/bits_correlator_lengths.mem", correlator_lengths);
     end
 
     reg  [CORR_WIDTH+EL_GATES:0]  count = 0;

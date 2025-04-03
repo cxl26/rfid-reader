@@ -8,12 +8,12 @@ module top # (
     parameter SCALING_BITS = 5,
     parameter EL_GATES = 1
 )(
-    input        sys_clk, 
+    input       sys_clk, 
     input wire  pmod1,   // rx_in
     input wire  pmod2,   // rst
     output wire  pmod3,  // bit
     output wire  pmod4,  // vld
-    input wire  pmod7,   // tx_out
+    output wire  pmod7,  // tx_out
     input wire  pmod8,  
     input wire  pmod9,
     input wire  pmod10
@@ -50,25 +50,31 @@ module top # (
     wire [BANK_WIDTH-1:0] frequency_bank;
 
     wire preamble_detected;
-    wire rx_eof;
-
-    wire tx_sof;
-    wire tx_eof;
 
     wire [15:0] crc16_val;
     wire        crc16_chk;
 
     wire [4:0] crc5_val;
-    wire        crc5_chk;
+    wire       crc5_chk;
 
     wire output_pie_preamble;
 
-    pll pll_u1 (
-        .clock_in  (sys_clk),
-        .clock_out (clk),
-        .locked    ()
-    );
-    // assign clk = sys_clk;
+    // // For Lattice Synthesis
+    // lattice_pll lattice_pll_u1 (
+    //     .clock_in  (sys_clk),
+    //     .clock_out (clk),
+    //     .locked    ()
+    // );
+
+    // // For Xilinx Synthesis
+    // xilinx_mmcm xilinx_mmcm_u1 (
+    //     .clk_in1  (sys_clk),
+    //     .clk_out1 (clk),
+    //     .reset    (rst)
+    // );
+    
+    // For simulation
+    assign clk = sys_clk;
 
     sampler #(
         .N(SAMPLING_N)

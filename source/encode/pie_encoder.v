@@ -11,7 +11,7 @@ module pie_encoder
     input  wire         rst,        // Reset signal
     input  wire         in_bit,     // Binary input data
     output wire         in_rdy,
-    output reg          out_pie,     // FM0 encoded output
+    output reg          out_pie = 1,     // FM0 encoded output
     input  wire         output_pie_preamble
 );
 
@@ -23,6 +23,7 @@ module pie_encoder
     localparam STATE_SYNC_ZERO = 3'd3;
     localparam STATE_RTCAL     = 3'd4;
     localparam STATE_TRCAL     = 3'd5;
+    localparam STATE_IDLE      = 3'd6;
     
     reg [2:0] state = STATE_DELIMITER;
     reg [2:0] next_state;
@@ -40,6 +41,8 @@ module pie_encoder
             STATE_SYNC_ZERO: out_pie = count < ZERO_PERIOD-PW;
             STATE_RTCAL    : out_pie = count < RTCAL-PW;
             STATE_TRCAL    : out_pie = count < TRCAL-PW;
+            STATE_IDLE     : out_pie = 1;
+            default        : out_pie = 1;
         endcase
         case (state)
             STATE_DATA_ZERO: change_state = (count == ZERO_PERIOD-1);
@@ -48,6 +51,8 @@ module pie_encoder
             STATE_SYNC_ZERO: change_state = (count == ZERO_PERIOD-1);
             STATE_RTCAL    : change_state = (count == RTCAL-1);
             STATE_TRCAL    : change_state = (count == TRCAL-1);
+            STATE_IDLE     : change_state = 1;
+            default        : change_state = 1;
         endcase
         case (state)
             STATE_DATA_ZERO: next_state = change_state ? in_bit : STATE_DATA_ZERO;
@@ -56,12 +61,14 @@ module pie_encoder
             STATE_SYNC_ZERO: next_state = change_state ? STATE_RTCAL : STATE_SYNC_ZERO;
             STATE_RTCAL    : next_state = change_state ? (output_pie_preamble ? STATE_TRCAL : in_bit) : STATE_RTCAL;
             STATE_TRCAL    : next_state = change_state ? in_bit  : STATE_TRCAL;
+            STATE_IDLE     : next_state = STATE_DELIMITER;
+            default        : next_state = STATE_IDLE;
         endcase
     end
 
     always @(posedge clk or posedge rst) begin
         if (rst) begin
-            state <= STATE_DELIMITER;
+            state <= STATE_IDLE;
             count <= 0;
         end else begin
             state <= next_state;

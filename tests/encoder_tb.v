@@ -8,6 +8,7 @@ module fm0_encoder_tb;
     wire in_rdy;
     wire out_dat;
     reg  out_rdy;
+    reg  rst = 1;
 
     // generated signals
     reg        queue [$]; 
@@ -26,7 +27,7 @@ module fm0_encoder_tb;
 
     pie_encoder pie_encoder_u1 (
         .clk(clk),         // Clock signal
-        .rst(1'b0),        // Reset signal
+        .rst(rst),        // Reset signal
         .in_bit(in_bit),           // Binary input data
         .in_rdy(in_rdy),
         .out_pie(out_dat),          // FM0 encoded output
@@ -64,5 +65,7 @@ module fm0_encoder_tb;
         repeat(9000) #5 clk = ~clk;
         $finish;
     end
+
+    initial #20 rst <= 0;
 
 endmodule

@@ -34,8 +34,8 @@ synth:
 		synth_ice40 -noflatten; \
 		write_blif rfid-reader.blif; \
 		write_json rfid-reader.json;"
-	# nextpnr-ice40 -l ../logs/nextpnr_log.txt --hx1k --package tq144 --json rfid-reader.json --pcf constraint.pcf --asc rfid-reader.asc
-	# icetime -p constraint.pcf -P tq144 -d hx1k -t rfid-reader.asc -r ../logs/icetime_log.txt
+	# nextpnr-ice40 -l ../logs/nextpnr_log.txt --hx1k --package tq144 --json rfid-reader.json --pcf icestick_constraint.pcf --asc rfid-reader.asc
+	# icetime -p icestick_constraint.pcf -P tq144 -d hx1k -t rfid-reader.asc -r ../logs/icetime_log.txt
 	# icepack rfid-reader.asc bitstream.bin
 
 sim:
