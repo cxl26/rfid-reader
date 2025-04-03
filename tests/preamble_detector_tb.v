@@ -9,7 +9,7 @@ module preamble_detector_tb;
     parameter SCALING_BITS   = 5;
 
     parameter NUM_JUNK = 200;
-    parameter NUM_DATA = 5;
+    parameter NUM_DATA = 100;
     parameter NUM_ZEROS = LENGTH/2+1;
     parameter PREAMBLE = 80'b1111111111000011110000000011111000000000000011111111;
 
@@ -55,8 +55,8 @@ module preamble_detector_tb;
     );
 
     always@(posedge clk) begin
-        if ($urandom_range(1, 0)) begin
-        //if (1'b0) begin
+        // if ($urandom_range(1, 0)) begin
+        if (1'b0) begin
             in_dat <= $random();
             in_vld <= 1'b0;
         end else begin

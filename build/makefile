@@ -3,11 +3,11 @@
 # TESTBENCH_FILE = ../tests/sync_fifo_tb.v
 # TOPLEVEL_FILE  = ../source/fifo/sync_fifo.v
 
-TESTBENCH_FILE = ../tests/top_tb.v
-TOPLEVEL_FILE  = ../source/top.v
+# TESTBENCH_FILE = ../tests/top_tb.v
+# TOPLEVEL_FILE  = ../source/top.v
 
-# TESTBENCH_FILE = ../tests/preamble_detector_tb.v
-# TOPLEVEL_FILE  = ../source/detect_preamble/preamble_detector.v
+TESTBENCH_FILE = ../tests/preamble_detector_tb.v
+TOPLEVEL_FILE  = ../source/detect_preamble/preamble_detector.v
 
 # TESTBENCH_FILE = ../tests/bits_detector_tb.v
 # TOPLEVEL_FILE  = ../source/detect_bits/bits_detector.v

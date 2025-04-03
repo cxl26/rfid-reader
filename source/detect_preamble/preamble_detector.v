@@ -57,6 +57,9 @@ module preamble_detector #(
     wire fifo_jump;
     wire fifo_jump_error;
 
+    reg [2:0] in_dat_reg;
+    reg [2:0] in_vld_reg;
+
     assign preamble_detected = (state == FIND_STATE) && (next_state == DATA_STATE);
     assign frequency_bank = max_bank;
 
@@ -93,7 +96,7 @@ module preamble_detector #(
             max_bank <= 0;
             offset   <= 0;
         end else begin
-            if ((state == FIND_STATE || next_state == FIND_STATE) && in_vld && cur_corr > max_corr) begin
+            if ((state == FIND_STATE || next_state == FIND_STATE) && in_vld_reg[0] && cur_corr > max_corr) begin
                 max_corr <= cur_corr;
                 max_bank <= cur_bank;
                 offset   <= count;
@@ -113,7 +116,7 @@ module preamble_detector #(
         .rst(fifo_rst),
         .wr_en(push),
         .rd_en(pop),
-        .wr_data(in_dat),
+        .wr_data(in_dat_reg[0]),
         .rd_data(out_dat),
         .empty(fifo_empty),
         .full(fifo_full),
@@ -122,7 +125,7 @@ module preamble_detector #(
         .jump_error (fifo_jump_error)
     );
 
-    assign push = in_vld && (state != IDLE_STATE || next_state != IDLE_STATE) && !fifo_full;
+    assign push = in_vld_reg[0] && (state != IDLE_STATE || next_state != IDLE_STATE) && !fifo_full;
     assign pop  = (state == DATA_STATE) && !fifo_empty;
 
     assign fifo_jump = (state == FIND_STATE && next_state == DATA_STATE);
@@ -156,10 +159,14 @@ module preamble_detector #(
             state <= IDLE_STATE;
             count <= 0;
             out_vld <= 0;
+            in_dat_reg <= 0;
+            in_vld_reg <= 0;
         end else begin
             state <= next_state;
             count <= next_count;
             out_vld <= pop;
+            in_dat_reg <= {in_dat,in_dat_reg[2:1]};
+            in_vld_reg <= {in_vld,in_vld_reg[2:1]};
         end
     end
 

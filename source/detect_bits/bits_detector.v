@@ -16,13 +16,16 @@ module bits_detector #(
     localparam CORR_WIDTH = $clog2(LENGTH+1);
 
     reg [CORR_WIDTH-1:0]   correlator_lengths [BANKS-1:0];
-//    initial begin
-//        $readmemb("../source/detect_bits/bits_correlator_lengths.mem", correlator_lengths);
-//    end
 
+    `ifdef XILINX_SYNTH
     initial begin
         $readmemb("bits_correlator_lengths.mem", correlator_lengths);
     end
+    `else
+    initial begin
+        $readmemb("../source/detect_bits/bits_correlator_lengths.mem", correlator_lengths);
+    end
+    `endif
 
     reg  [CORR_WIDTH+EL_GATES:0]  count = 0;
     reg                           valid = 0;

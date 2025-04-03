@@ -23,15 +23,17 @@ module bits_correlator #(
 
     integer j;
 
-//    initial begin
-//        $readmemb("../source/detect_bits/bits_correlator_coeffs.mem", correlator_coeffs);
-//        $readmemb("../source/detect_bits/bits_correlator_lengths.mem", correlator_lengths);
-//    end
-
+    `ifdef XILINX_SYNTH
     initial begin
         $readmemb("bits_correlator_coeffs.mem", correlator_coeffs);
         $readmemb("bits_correlator_lengths.mem", correlator_lengths);
     end
+    `else
+    initial begin
+        $readmemb("../source/detect_bits/bits_correlator_coeffs.mem", correlator_coeffs);
+        $readmemb("../source/detect_bits/bits_correlator_lengths.mem", correlator_lengths);
+    end
+    `endif
 
     always @(posedge clk) begin
         if (rst) begin

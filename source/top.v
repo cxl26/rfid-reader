@@ -1,3 +1,7 @@
+`define SIM
+// `DEFINE LATTICE_SYNTH
+// `DEFINE XILINX_SYNTH
+
 module top # (
     parameter SAMPLING_N = 2,
     parameter BANKS = 9,
@@ -60,22 +64,24 @@ module top # (
 
     wire output_pie_preamble;
 
-    // // For Lattice Synthesis
-    // lattice_pll lattice_pll_u1 (
-    //     .clock_in  (sys_clk),
-    //     .clock_out (clk),
-    //     .locked    ()
-    // );
-
+    `ifdef LATTICE_SYNTH
+    // For Lattice Synthesis
+    lattice_pll lattice_pll_u1 (
+        .clock_in  (sys_clk),
+        .clock_out (clk),
+        .locked    ()
+    );
+    `elsif XILINX_SYNTH
      // For Xilinx Synthesis
      xilinx_mmcm xilinx_mmcm_u1 (
          .clk_in1  (sys_clk),
          .clk_out1 (clk),
          .reset    (rst)
      );
-    
+    `elsif SIM
     // For simulation
-//    assign clk = sys_clk;
+    assign clk = sys_clk;
+    `endif
 
     sampler #(
         .N(SAMPLING_N)
