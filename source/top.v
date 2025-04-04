@@ -1,16 +1,22 @@
-// `define SIM
+`define SIM
 // `define LATTICE_SYNTH
-`define XILINX_SYNTH
+// `define XILINX_SYNTH
 
 module top # (
-    parameter SAMPLING_N = 2,
+    parameter SAMPLING_N = 50,
     parameter BANKS = 9,
     parameter PREAMBLE_MAX_LENGTH = 80,
     parameter SYMBOL_MAX_LENGTH = 13,
     parameter HI_THRESHOLD = 75,
     parameter LO_THRESHOLD = 70,
     parameter SCALING_BITS = 5,
-    parameter EL_GATES = 1
+    parameter EL_GATES = 1,
+    parameter PW = 200,
+    parameter ONE_PERIOD = 875, // PW is 1/3 TARI works
+    parameter ZERO_PERIOD = 500,
+    parameter RTCAL = 1375,
+    parameter TRCAL = 4000,
+    parameter DELIMITER = 312
 )(
     input       sys_clk, 
     input       sys_rst,
@@ -116,7 +122,7 @@ module top # (
         .EL_GATES(EL_GATES)
     ) bits_detector_u1 (
         .clk            (clk),
-        .rst            (preamble_detected),
+        .rst            (preamble_detected || rst),
         .in_dat         (preamble_detector_out_dat), 
         .in_vld         (preamble_detector_out_vld),
         .frequency_bank (frequency_bank),
@@ -126,7 +132,7 @@ module top # (
 
     crc16 crc16_u1 (
         .clk    (clk),
-        .rst    (preamble_detected),
+        .rst    (preamble_detected || rst),
         .in_dat (bits_detector_out_dat),
         .in_vld (bits_detector_out_vld),
         .crc    (crc16_val),
@@ -149,7 +155,7 @@ module top # (
 
     crc5 crc5_u1 (
         .clk    (clk),
-        .rst    (!sending),
+        .rst    (!sending || rst),
         .in_dat (ctrl_fsm_out_dat),
         .in_vld (ctrl_fsm_out_rdy),
         .crc    (crc5_val),
@@ -158,18 +164,18 @@ module top # (
 
     pie_encoder
     #(
-        .PW         (2),
-        .ONE_PERIOD (10), // PW is 1/3 TARI works
-        .ZERO_PERIOD(6),
-        .RTCAL      (16),
-        .TRCAL      (32),
-        .DELIMITER  (3)
+        .PW         (PW),
+        .ONE_PERIOD (ONE_PERIOD), // PW is 1/3 TARI works
+        .ZERO_PERIOD(ZERO_PERIOD),
+        .RTCAL      (RTCAL),
+        .TRCAL      (TRCAL),
+        .DELIMITER  (DELIMITER)
     ) pie_encoder_u1 (
-        .clk(clk),
-        .rst(!sending),
-        .in_bit(ctrl_fsm_out_dat),     // Binary input data
-        .in_rdy(ctrl_fsm_out_rdy),
-        .out_pie(tx_out),     // FM0 encoded output
+        .clk        (clk),
+        .rst        (!sending || rst),
+        .in_bit     (ctrl_fsm_out_dat),     // Binary input data
+        .in_rdy     (ctrl_fsm_out_rdy),
+        .out_pie    (tx_out),     // FM0 encoded output
         .output_pie_preamble(output_pie_preamble)
     );
 

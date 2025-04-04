@@ -1,19 +1,34 @@
 
 module top_tb;
+    // parameter SAMPLING_N = 50;
+    // parameter BANKS = 9;
+    // parameter PREAMBLE_MAX_LENGTH = 80;
+    // parameter SYMBOL_MAX_LENGTH = 13;
+    // parameter HI_THRESHOLD = 75;
+    // parameter LO_THRESHOLD = 70;
+    // parameter SCALING_BITS = 5;
+    // parameter EL_GATES = 1;
+    // parameter PW = 200;
+    // parameter ONE_PERIOD = 875; // PW is 1/3 TARI works
+    // parameter ZERO_PERIOD = 500;
+    // parameter RTCAL = 1375;
+    // parameter TRCAL = 4000;
+    // parameter DELIMITER = 312;
 
-    // Common Dut Parameters
-    parameter BANKS          = 9;
-    parameter SAMPLING_N     = 1;
-
-    // Preamble Dut Parameters
+    parameter SAMPLING_N = 2;
+    parameter BANKS = 9;
     parameter PREAMBLE_MAX_LENGTH = 80;
+    parameter SYMBOL_MAX_LENGTH = 13;
     parameter HI_THRESHOLD = 75;
     parameter LO_THRESHOLD = 70;
     parameter SCALING_BITS = 5;
-
-    // Symbol Dut Parameters
-    parameter SYMBOL_MAX_LENGTH = 13;
-    parameter EL_GATES       = 2;
+    parameter EL_GATES = 1;
+    parameter PW = 2;
+    parameter ONE_PERIOD = 10;
+    parameter ZERO_PERIOD = 6;
+    parameter RTCAL = 16;
+    parameter TRCAL = 32;
+    parameter DELIMITER = 3;
 
     // Test Parameters
     parameter ONE_IN_X_FLIPPED = 0;
@@ -63,7 +78,14 @@ module top_tb;
         .HI_THRESHOLD       (HI_THRESHOLD),
         .LO_THRESHOLD       (LO_THRESHOLD),
         .SCALING_BITS       (SCALING_BITS),
-        .EL_GATES           (EL_GATES)
+        .EL_GATES           (EL_GATES),
+        .PW                 (PW),
+        .ONE_PERIOD         (ONE_PERIOD),
+        .ZERO_PERIOD        (ZERO_PERIOD),
+        .RTCAL              (RTCAL),
+        .TRCAL              (TRCAL),
+        .DELIMITER          (DELIMITER)
+
     ) top_u1 (
         .sys_clk    (clk),
         .sys_rst    (1'b0), 

@@ -1,11 +1,11 @@
 module pie_encoder
 #(
-    parameter PW = 2,
-    parameter ONE_PERIOD = 10, // PW is 1/3 TARI works
-    parameter ZERO_PERIOD = 6,
-    parameter RTCAL = 16,
-    parameter TRCAL = 32,
-    parameter DELIMITER = 3
+    parameter PW = 200,
+    parameter ONE_PERIOD = 875, // PW is 1/3 TARI works
+    parameter ZERO_PERIOD = 500,
+    parameter RTCAL = 1375,
+    parameter TRCAL = 4000,
+    parameter DELIMITER = 312
 ) (
     input  wire         clk,        // Clock signal
     input  wire         rst,        // Reset signal

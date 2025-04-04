@@ -1,4 +1,4 @@
-`define XILINX_SYNTH
+// `define XILINX_SYNTH
 
 module bits_correlator #(
     parameter       LENGTH    = 64,
