@@ -1,6 +1,6 @@
-`define SIM
-// `DEFINE LATTICE_SYNTH
-// `DEFINE XILINX_SYNTH
+// `define SIM
+// `define LATTICE_SYNTH
+`define XILINX_SYNTH
 
 module top # (
     parameter SAMPLING_N = 2,

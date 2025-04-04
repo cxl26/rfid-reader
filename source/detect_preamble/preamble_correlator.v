@@ -1,3 +1,5 @@
+`define XILINX_SYNTH
+
 // module preamble_correlator #(
 //     parameter       LENGTH = 64,
 //     parameter       BANKS  = 16,

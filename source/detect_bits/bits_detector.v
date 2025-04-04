@@ -1,3 +1,5 @@
+`define XILINX_SYNTH
+
 module bits_detector #(
     parameter       LENGTH   = 4,
     parameter       BANKS    = 4,
