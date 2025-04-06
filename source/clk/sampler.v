@@ -5,13 +5,15 @@ module sampler #(
     input  wire rst,      // Synchronous reset
     input  wire rx_in,    // Asynchronous input signal
     output wire out_dat,
-    output wire out_vld
+    output wire out_vld,
+    output wire sample_strb
 );
 
     reg ff1 = 0;
     reg ff2 = 0;
-    wire sample_strobe;
-
+    (* mark_debug = "true" *) wire sample_strobe;
+    
+    assign sample_strb = sample_strobe;
     // Instantiate sample strobe generator
     strb_gen #(
         .N(N)

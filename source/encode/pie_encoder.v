@@ -25,7 +25,7 @@ module pie_encoder
     localparam STATE_TRCAL     = 3'd5;
     localparam STATE_IDLE      = 3'd6;
     
-    reg [2:0] state = STATE_DELIMITER;
+    (* mark_debug = "true" *) reg [2:0] state = STATE_DELIMITER;
     reg [2:0] next_state;
     reg change_state;
 

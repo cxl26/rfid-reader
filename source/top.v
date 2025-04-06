@@ -1,14 +1,14 @@
-`define SIM
+// `define SIM
 // `define LATTICE_SYNTH
-// `define XILINX_SYNTH
+`define XILINX_SYNTH
 
 module top # (
     parameter SAMPLING_N = 50,
     parameter BANKS = 9,
     parameter PREAMBLE_MAX_LENGTH = 80,
     parameter SYMBOL_MAX_LENGTH = 13,
-    parameter HI_THRESHOLD = 75,
-    parameter LO_THRESHOLD = 70,
+    parameter HI_THRESHOLD = 65,
+    parameter LO_THRESHOLD = 60,
     parameter SCALING_BITS = 5,
     parameter EL_GATES = 1,
     parameter PW = 200,
@@ -24,8 +24,8 @@ module top # (
     output wire  pmod2,  // tx_out
     output wire  pmod3,  // bit
     output wire  pmod4,  // vld
-    output wire  pmod7,
-    output wire  pmod8,  
+    output wire  pmod7,  // sample_strobe
+    output wire  pmod8,  // preamble_detected
     output wire  pmod9,
     output wire  pmod10
 );
@@ -36,12 +36,15 @@ module top # (
     wire rst;
     wire rx_in;
     wire tx_out;
+    wire sample_strobe;
 
     assign rx_in = pmod1;
     assign pmod2 = tx_out;
     assign rst = sys_rst;
     assign pmod3 = bits_detector_out_dat;
     assign pmod4 = bits_detector_out_vld;
+    assign pmod7 = sample_strobe;
+    assign pmod8 = preamble_detected;
 
     // RX Path Data
     wire sampler_out_dat;
@@ -60,7 +63,7 @@ module top # (
 
     wire [BANK_WIDTH-1:0] frequency_bank;
 
-    wire preamble_detected;
+    (* mark_debug = "true" *) wire preamble_detected;
 
     wire [15:0] crc16_val;
     wire        crc16_chk;
@@ -96,7 +99,8 @@ module top # (
         .rst    (rst),      // Synchronous reset
         .rx_in  (rx_in),    // Asynchronous input signal
         .out_dat(sampler_out_dat),
-        .out_vld(sampler_out_vld)
+        .out_vld(sampler_out_vld),
+        .sample_strb(sample_strobe)
     );
 
     preamble_detector #(
@@ -139,7 +143,11 @@ module top # (
         .chk    (crc16_chk)
     );
 
-    ctrl_fsm ctrl_fsm_u1 (
+    ctrl_fsm #(
+        .RN16_TIMEOUT(500000),
+        .EPC_TIMEOUT(5000000),
+        .IDLE_TIMEOUT(5000000)
+    ) ctrl_fsm_u1 (
         .clk        (clk),
         .rst        (rst),
         .in_dat     (bits_detector_out_dat), 

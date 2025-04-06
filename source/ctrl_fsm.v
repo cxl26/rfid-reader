@@ -29,13 +29,15 @@ module ctrl_fsm #(
     localparam SND_REP  = 3'd4;
     localparam SND_NAK  = 3'd5;
     localparam IDLE     = 3'd6;
-    reg [2:0] state = IDLE;
+    (* mark_debug = "true" *) reg [2:0] state = IDLE;
     reg [2:0] next_state;
-
+    
+    localparam TIME_COUNT_WIDTH = $clog2(IDLE_TIMEOUT);
+    
     // Counters
     reg [9:0] bits_counter = 0;
-    reg [13:0] time_counter = 0;
-    reg [6:0] slot_counter = 2**CMD_Q;
+    reg [TIME_COUNT_WIDTH-1:0] time_counter = 0;
+    reg [6:0] slot_counter = 2**CMD_Q - 1;
 
     reg [4:0]   epc_len = 5'b11111;
     reg [511:0] epc_val = 0;
@@ -77,12 +79,12 @@ module ctrl_fsm #(
                   || (time_counter == EPC_TIMEOUT && state == RCV_EPC)
                   || (time_counter == RN16_TIMEOUT && state == RCV_RN16);
     assign still_querying = (slot_counter != 0);
-    assign qry_sent  = (state == SND_QRY) && (bits_counter == QRY_BITS + 5 - 1) && out_rdy;
-    assign rn16_rcvd = (state == RCV_RN16) && (bits_counter == RN16_BITS - 1);
-    assign ack_sent  = (state == SND_ACK) && (bits_counter == ACK_BITS - 1) && out_rdy;
-    assign epc_rcvd  = (state == RCV_EPC) && (bits_counter == EPC_BITS + epc_len*16 + 16 - 1);
-    assign rep_sent  = (state == SND_REP) && (bits_counter == REP_BITS - 1) && out_rdy;
-    assign nak_sent  = (state == SND_NAK) && (bits_counter == NAK_BITS - 1) && out_rdy;
+    assign qry_sent  = (state == SND_QRY) && (bits_counter == QRY_BITS + 5) && out_rdy;
+    assign rn16_rcvd = (state == RCV_RN16) && (bits_counter == RN16_BITS);
+    assign ack_sent  = (state == SND_ACK) && (bits_counter == ACK_BITS) && out_rdy;
+    assign epc_rcvd  = (state == RCV_EPC) && (bits_counter == EPC_BITS + epc_len*16 + 16);
+    assign rep_sent  = (state == SND_REP) && (bits_counter == REP_BITS) && out_rdy;
+    assign nak_sent  = (state == SND_NAK) && (bits_counter == NAK_BITS) && out_rdy;
 
     // State machine
     always@(*) begin
@@ -146,7 +148,7 @@ module ctrl_fsm #(
             state <= IDLE;
             bits_counter <= 0;
             time_counter <= 0;
-            slot_counter <= 2**CMD_Q;
+            slot_counter <= 2**CMD_Q -1;
             epc_len <= 5'b11111;
             epc_val <= 0;
             qry_command <= {QRY_CMD,CMD_DR,CMD_M,CMD_TREXT,CMD_SELECT,CMD_SESSION,CMD_TARGET,CMD_Q,CMD_CRC};
