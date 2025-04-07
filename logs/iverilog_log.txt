@@ -1,6 +1,6 @@
-WARNING: ../source/detect_preamble/preamble_correlator.v:104: $readmemb: Standard inconsistency, following 1364-2005.
-WARNING: ../source/detect_preamble/preamble_correlator.v:105: $readmemb: Standard inconsistency, following 1364-2005.
-WARNING: ../source/detect_preamble/preamble_correlator.v:106: $readmemb: Standard inconsistency, following 1364-2005.
+WARNING: ../source/detect_preamble/preamble_correlator.v:37: $readmemb: Standard inconsistency, following 1364-2005.
+WARNING: ../source/detect_preamble/preamble_correlator.v:38: $readmemb: Standard inconsistency, following 1364-2005.
+WARNING: ../source/detect_preamble/preamble_correlator.v:39: $readmemb: Standard inconsistency, following 1364-2005.
 WARNING: ../source/detect_bits/bits_correlator.v:35: $readmemb: Standard inconsistency, following 1364-2005.
 WARNING: ../source/detect_bits/bits_correlator.v:36: $readmemb: Standard inconsistency, following 1364-2005.
 WARNING: ../source/detect_bits/bits_detector.v:28: $readmemb: Standard inconsistency, following 1364-2005.
