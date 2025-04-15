@@ -59,6 +59,8 @@ module preamble_detector #(
 
     reg [2:0] in_dat_reg;
     reg [2:0] in_vld_reg;
+    
+	integer fd; // Declare a variable to store the file handler
 
     assign preamble_detected = (state == FIND_STATE) && (next_state == DATA_STATE);
     assign frequency_bank = max_bank;
@@ -76,6 +78,14 @@ module preamble_detector #(
         .corr_vld(corr_vld),
         .all_zeros(all_zeros)
     );
+
+    module tb;
+
+	initial begin
+        // $monitor("%0t, %d, %b, %b, %b", $time, cur_corr, above_thresh, below_thresh, 0);
+	end
+
+endmodule
 
     // cur_bank and cur_corr determined (combinational) by taking maximum correlator bank
     always@(*) begin

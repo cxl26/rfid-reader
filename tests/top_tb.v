@@ -19,10 +19,10 @@ module top_tb;
     parameter BANKS = 9;
     parameter PREAMBLE_MAX_LENGTH = 80;
     parameter SYMBOL_MAX_LENGTH = 13;
-    parameter HI_THRESHOLD = 75;
-    parameter LO_THRESHOLD = 70;
+    parameter HI_THRESHOLD = 64;
+    parameter LO_THRESHOLD = 64;
     parameter SCALING_BITS = 5;
-    parameter EL_GATES = 1;
+    parameter EL_GATES = 3;
     parameter PW = 2;
     parameter ONE_PERIOD = 10;
     parameter ZERO_PERIOD = 6;
@@ -31,12 +31,12 @@ module top_tb;
     parameter DELIMITER = 3;
 
     // Test Parameters
-    parameter ONE_IN_X_FLIPPED = 0;
+    parameter ONE_IN_X_FLIPPED = 100;
     parameter PREAMBLE = 80'b1111111111110000011111000000000011111100000000000000001111111111;
     parameter SYM_PERIOD = 4'd11;
-    parameter NUM_JUNK = 200;
+    parameter NUM_JUNK = 300;
     parameter NUM_PREA = 80;
-    parameter NUM_DATA = 2800;
+    parameter NUM_DATA = 800;
     parameter NUM_ZERO = NUM_PREA/2+1;
     parameter SEED = 10;
 
@@ -138,8 +138,8 @@ module top_tb;
             send_count <= (next_state != send_state) ? 0 : send_count + 1;
             case(send_state)
                 SEND_JUNK:  in_dat <= $urandom_range(1,0);
-                SEND_PREA:  in_dat <= preamble[NUM_PREA-1-send_count];
-                SEND_DATA:  in_dat <= ($urandom_range(ONE_IN_X_FLIPPED,0) == 0) ? !fm0 : fm0; // random sample bit flips
+                SEND_PREA:  in_dat <= ($urandom_range(ONE_IN_X_FLIPPED,0) == 1) ? !(preamble[NUM_PREA-1-send_count]) : preamble[NUM_PREA-1-send_count] ;
+                SEND_DATA:  in_dat <= ($urandom_range(ONE_IN_X_FLIPPED,0) == 1) ? !fm0 : fm0; // random sample bit flips
                 SEND_ZERO:  in_dat <= 1'b0;
             endcase
         end
